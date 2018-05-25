@@ -46,10 +46,7 @@ public class PersonView {
 	@JsonProperty
 	public Long getAge() {
 		long currentMs = System.currentTimeMillis() / 1000;
-		long age = (currentMs - this.dateOfBirth) / 3600 / 24 / 365;
-		return Long.valueOf(age);
+		return (currentMs - this.dateOfBirth) / 3600 / 24 / 365;
 	}
-	
-	
 
 }

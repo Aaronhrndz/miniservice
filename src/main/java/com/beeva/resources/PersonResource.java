@@ -1,13 +1,10 @@
 package com.beeva.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,19 +21,21 @@ import static javax.ws.rs.core.Response.status;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
+
+
     @Inject
     private Repository repository;
 
     @GET
-    public List<PersonView> getAll() {
-        List<PersonView> allUsers = Lists.newArrayList();
+    public List<PersonView> getAll(@QueryParam("minAge") Integer minAge) {
+        List<PersonView> people = repository.getAll().stream().map(Person::toView).collect(Collectors.toList());
 
-        for (Person person: repository.getAll()) {
-        	allUsers.add(person.toView());
-		}
+        if (minAge != null) {
+            people = people.stream().filter(p -> p.getAge() >= minAge).collect(Collectors.toList());
+        }
 
-		return allUsers;
-	}
+        return people;
+    }
 
     @GET
     @Path("/{id}")

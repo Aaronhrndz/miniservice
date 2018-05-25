@@ -25,7 +25,6 @@ public class MongoRepository implements Repository {
 
     @Override
     public List<Person> getAll() {
-
         List<Person> people = Lists.newArrayList();
         for (Person person : collection.find()) {
             people.add(person);
