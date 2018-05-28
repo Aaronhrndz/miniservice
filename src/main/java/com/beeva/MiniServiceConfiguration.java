@@ -2,9 +2,33 @@ package com.beeva;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.*;
-import javax.validation.constraints.*;
 
 public class MiniServiceConfiguration extends Configuration {
-    // TODO: implement service configuration
+
+    private DatabaseConfig databaseConfig;
+
+    @JsonProperty("database")
+    public DatabaseConfig getDatabaseConfig() {
+        return databaseConfig;
+    }
+
+    public void setDatabaseConfig(DatabaseConfig databaseConfig) {
+        this.databaseConfig = databaseConfig;
+    }
+
+    static class DatabaseConfig {
+
+        private String name;
+
+        @JsonProperty("name")
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
 }
+
+

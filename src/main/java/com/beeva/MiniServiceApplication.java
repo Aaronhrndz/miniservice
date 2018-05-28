@@ -18,6 +18,8 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import java.util.Calendar;
+
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
@@ -43,9 +45,10 @@ public class MiniServiceApplication
     public void run(final MiniServiceConfiguration configuration,
             final Environment environment) {
 
+        Calendar calendar = Calendar.getInstance();
+        Repository repository = new MongoRepository(configuration.getDatabaseConfig().getName());
         environment.jersey().register(new PersonResource());
 
-        Repository repository = new MongoRepository();
 
         environment.lifecycle().manage(new Managed() {
 
@@ -66,6 +69,7 @@ public class MiniServiceApplication
             @Override
             protected void configure() {
                 bind(repository).to(Repository.class);
+                bind(calendar).to(Calendar.class);
             }
         });
 

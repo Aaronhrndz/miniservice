@@ -3,8 +3,6 @@ package com.beeva.db;
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
-
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import jersey.repackaged.com.google.common.collect.Lists;
@@ -12,9 +10,10 @@ import jersey.repackaged.com.google.common.collect.Lists;
 import com.beeva.exceptions.PersonNotFoundException;
 import com.beeva.model.Person;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+
+import javax.inject.Inject;
 
 import static com.mongodb.client.model.Filters.*;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -24,6 +23,15 @@ public class MongoRepository implements Repository {
 
     private MongoClient client;
     private MongoCollection<Person> collection;
+    private String database = "people";
+
+    public MongoRepository() {
+
+    }
+
+    public MongoRepository(String database) {
+        this.database = database;
+    }
 
     @Override
     public List<Person> getAll() {
@@ -62,7 +70,7 @@ public class MongoRepository implements Repository {
 
         this.client = new MongoClient("localhost", MongoClientOptions
                 .builder().codecRegistry(pojoCodecRegistry).build());
-        this.collection = client.getDatabase("people").getCollection("people", Person.class);
+        this.collection = client.getDatabase(database).getCollection("people", Person.class);
 
     }
 

@@ -4,4 +4,4 @@ logging:
     com.beeva: DEBUG
 
 database:
-  name: "people"
+  name: "people-test"

@@ -6,7 +6,7 @@ public class Person {
 
     private String id;
     private String name;
-    private Integer dateOfBirth;
+    private Long dateOfBirth;
 
     public Person() {
 
@@ -28,11 +28,11 @@ public class Person {
         this.name = name;
     }
 
-    public Integer getDateOfBirth() {
+    public Long getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Integer dateOfBirth) {
+    public void setDateOfBirth(Long dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -54,4 +54,23 @@ public class Person {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (id != null ? !id.equals(person.id) : person.id != null) return false;
+        if (name != null ? !name.equals(person.name) : person.name != null) return false;
+        return dateOfBirth != null ? dateOfBirth.equals(person.dateOfBirth) : person.dateOfBirth == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        return result;
+    }
 }

@@ -7,7 +7,7 @@ import com.beeva.model.Person;
 
 public interface Repository {
 	
-	public List<Person> getAll();
+	List<Person> getAll();
 	
 	Person getPerson(String personId) throws PersonNotFoundException;
 	

@@ -1,5 +1,6 @@
 package com.beeva.resources;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,8 +22,13 @@ import static javax.ws.rs.core.Response.status;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
-    @Inject
-    private Repository repository;
+    @Inject private Repository repository;
+
+    public PersonResource() {}
+
+    public PersonResource(Repository repository) {
+        this.repository = repository;
+    }
 
     @GET
     public List<PersonView> getAll(@QueryParam("minAge") Integer minAge) {
