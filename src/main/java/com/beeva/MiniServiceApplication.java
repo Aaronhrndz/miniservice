@@ -45,36 +45,30 @@ public class MiniServiceApplication
 
         environment.jersey().register(new PersonResource());
 
-        CodecRegistry pojoCodecRegistry = fromRegistries(
-                MongoClient.getDefaultCodecRegistry(), fromProviders(
-                        PojoCodecProvider.builder().automatic(true).build()));
-
-        MongoClient client = new MongoClient("localhost", MongoClientOptions
-                .builder().codecRegistry(pojoCodecRegistry).build());
-        MongoDatabase database = client.getDatabase("people");
-
-        environment.jersey().register(new AbstractBinder() {
-
-            @Override
-            protected void configure() {
-                bind(database).to(MongoDatabase.class);
-                bind(MongoRepository.class).to(Repository.class)
-                        .in(Singleton.class);
-            }
-        });
+        Repository repository = new MongoRepository();
 
         environment.lifecycle().manage(new Managed() {
 
             @Override
             public void start() {
-                // Empty method
+                repository.open();
             }
 
             @Override
             public void stop() {
-                client.close();
+                repository.close();
             }
         });
+
+
+        environment.jersey().register(new AbstractBinder() {
+
+            @Override
+            protected void configure() {
+                bind(repository).to(Repository.class);
+            }
+        });
+
 
     }
 

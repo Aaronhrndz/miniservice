@@ -9,8 +9,12 @@ public interface Repository {
 	
 	public List<Person> getAll();
 	
-	public Person getPerson(String personId) throws PersonNotFoundException;
+	Person getPerson(String personId) throws PersonNotFoundException;
 	
-	public Person savePerson(Person person);
+	Person savePerson(Person person);
+
+	void open();
+
+	void close();
 
 }

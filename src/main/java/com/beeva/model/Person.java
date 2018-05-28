@@ -38,7 +38,7 @@ public class Person {
 
     public PersonView toView() {
         PersonView view = new PersonView();
-        view.setName(this.name);
+        view.setName(name);
         view.setId(id);
         view.setDateOfBirth(dateOfBirth);
 

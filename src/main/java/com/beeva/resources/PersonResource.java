@@ -21,8 +21,6 @@ import static javax.ws.rs.core.Response.status;
 @Produces(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
-
-
     @Inject
     private Repository repository;
 
